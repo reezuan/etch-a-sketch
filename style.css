@@ -44,6 +44,5 @@ h1 {
 }
 
 .pixel {
-    border: black 1px solid;
     flex: auto;
 }
