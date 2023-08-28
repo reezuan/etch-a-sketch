@@ -28,19 +28,31 @@ function createBoard(length) {
 
         pixel.addEventListener("mouseover", (event) => {
             if (event.buttons == 1) {
-                console.log(event.target);
                 event.target.style.backgroundColor = "#000000";
             }
         });
     });
-
-    // Container will stay same size - the width/height of each div can be calculated (width of container / no. of boxes).
-    // Add an event listener to each ^ div that listens for mousedown, and changes colour accordingly.
-
-    // Each div should have a solid black border with 0 margins.
 }
 
-// Functions to create:
-// - One to set a new colour upon changing of settings.
+function clearBoard() {
+    const rows = document.querySelectorAll(".row");
+    rows.forEach((row) => {
+        row.remove();
+    });
+}
 
+function initialiseSettings() {
+    // https://stackoverflow.com/questions/63410174/running-a-function-while-changing-range-slider
+    
+    const boardSizeInput = document.querySelector("#board-size-slider");
+    const boardSizeLabel = document.querySelector(".board-size-label");
+
+    boardSizeInput.addEventListener("input", (event) => {
+        boardSizeLabel.textContent = `${event.target.value} x ${event.target.value}`;
+        clearBoard();
+        createBoard(event.target.value);
+    });
+}
+
+initialiseSettings();
 createBoard(16);
