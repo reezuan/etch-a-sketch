@@ -57,6 +57,11 @@ h1 {
     align-items: center;
 }
 
+.active-setting {
+    color: white;
+    background-color: #333333;
+}
+
 /* Board */
 
 .board {
