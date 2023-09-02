@@ -1,5 +1,6 @@
 function createBoard(length) {
     const board = document.querySelector(".board");
+    const hornButton = document.querySelector("#horn-mode-button");
     
     for (let row = 0; row < length; row++) {
         const row = document.createElement("div");
@@ -19,7 +20,10 @@ function createBoard(length) {
     const pixels = document.querySelectorAll(".pixel");
     pixels.forEach((pixel) => {
         pixel.addEventListener("mousedown", (event) => {
-            event.target.style.backgroundColor = "#000000";
+            event.target.style.backgroundColor = "#333333";
+            if (hornButton.classList.contains("active-setting")) {
+                playHorn();
+            }
         });
 
         // When the cursor hovers over a box, check if the left mouse button is being depressed.
@@ -28,7 +32,10 @@ function createBoard(length) {
 
         pixel.addEventListener("mouseover", (event) => {
             if (event.buttons == 1) {
-                event.target.style.backgroundColor = "#000000";
+                event.target.style.backgroundColor = "#333333";
+                if (hornButton.classList.contains("active-setting")) {
+                    playHorn();
+                }
             }
         });
     });
@@ -41,13 +48,29 @@ function clearBoard() {
     });
 }
 
+function playHorn() {
+    const hornSound = new Audio("assets/airhorn.mp3");
+    hornSound.play();
+}
+
 function initialiseSettings() {
+    const colourButton = document.querySelector("#colour-mode-button");
+    const rainbowButton = document.querySelector("#rainbow-mode-button");
+    const hornButton = document.querySelector("#horn-mode-button");
     const eraseButton = document.querySelector("#erase-button");
     const boardSizeInput = document.querySelector("#board-size-slider");
     const boardSizeLabel = document.querySelector(".board-size-label");
 
-    // Initialise button to erase board.
+    // Initialise colour mode button.
+    // Initialise rainbow mode button.
     
+    // Initialise horn mode button.
+    hornButton.addEventListener("click", () => {
+        // Toggle a class for active buttons.
+        hornButton.classList.toggle("active-setting");
+    });
+    
+    // Initialise button to erase board.
     eraseButton.addEventListener("click", () => {
         clearBoard();
         createBoard(+boardSizeInput.getAttribute("value"));
@@ -55,7 +78,6 @@ function initialiseSettings() {
     
     // Initialise size selection slider.
     // https://stackoverflow.com/questions/63410174/running-a-function-while-changing-range-slider
-    
     boardSizeInput.addEventListener("input", (event) => {
         boardSizeLabel.textContent = `${event.target.value} x ${event.target.value}`;
         clearBoard();
