@@ -20,7 +20,7 @@ function createBoard(length) {
     const pixels = document.querySelectorAll(".pixel");
     pixels.forEach((pixel) => {
         pixel.addEventListener("mousedown", (event) => {
-            event.target.style.backgroundColor = "#333333";
+            event.target.style.backgroundColor = getPixelColour();
             if (hornButton.classList.contains("active-setting")) {
                 playHorn();
             }
@@ -32,13 +32,30 @@ function createBoard(length) {
 
         pixel.addEventListener("mouseover", (event) => {
             if (event.buttons == 1) {
-                event.target.style.backgroundColor = "#333333";
+                event.target.style.backgroundColor = getPixelColour();
                 if (hornButton.classList.contains("active-setting")) {
                     playHorn();
                 }
             }
         });
     });
+}
+
+function getPixelColour() {
+    const colourPicker = document.querySelector("#colour-picker");
+    const selectedColour = colourPicker.getAttribute("value");
+    const colourButton = document.querySelector("#colour-mode-button");
+    const rainbowButton = document.querySelector("#rainbow-mode-button");
+
+    if (colourButton.classList.contains("active-setting")) {
+        return selectedColour;
+    } else if (rainbowButton.classList.contains("active-setting")) {
+        return `rgb(${generateRgbNumber()}, ${generateRgbNumber()}, ${generateRgbNumber()})`;
+    }
+}
+
+function generateRgbNumber() {
+    return Math.floor(Math.random() * 256);
 }
 
 function clearBoard() {
@@ -54,6 +71,7 @@ function playHorn() {
 }
 
 function initialiseSettings() {
+    const colourPicker = document.querySelector("#colour-picker");
     const colourButton = document.querySelector("#colour-mode-button");
     const rainbowButton = document.querySelector("#rainbow-mode-button");
     const hornButton = document.querySelector("#horn-mode-button");
@@ -61,8 +79,26 @@ function initialiseSettings() {
     const boardSizeInput = document.querySelector("#board-size-slider");
     const boardSizeLabel = document.querySelector(".board-size-label");
 
+    // Initialise colour selector.
+    colourPicker.addEventListener("change", (event) => {
+        colourPicker.setAttribute("value", event.target.value);
+    });
+    
     // Initialise colour mode button.
+    colourButton.addEventListener("click", () => {
+        if (rainbowButton.classList.contains("active-setting")) {
+            colourButton.classList.toggle("active-setting");
+            rainbowButton.classList.toggle("active-setting");
+        }
+    });
+    
     // Initialise rainbow mode button.
+    rainbowButton.addEventListener("click", () => {
+        if (colourButton.classList.contains("active-setting")) {
+            colourButton.classList.toggle("active-setting");
+            rainbowButton.classList.toggle("active-setting");
+        }
+    });
     
     // Initialise horn mode button.
     hornButton.addEventListener("click", () => {

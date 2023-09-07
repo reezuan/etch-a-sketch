@@ -13,11 +13,13 @@
     </div>
     <div class="main">
         <div class="settings-container">
-            <input type="color" id="colour-picker" value="#333333" />
-            <button class="active-setting" id="colour-mode-button">Colour mode</button>
-            <button id="rainbow-mode-button">Rainbow mode</button>
-            <button id="horn-mode-button">HORN MODE?!</button>
-            <button id="erase-button">Erase the board</button>
+            <div class="pixel-settings">
+                <input type="color" id="colour-picker" value="#333333" />
+                <button class="active-setting" id="colour-mode-button">Colour mode</button>
+                <button id="rainbow-mode-button">Rainbow mode</button>
+                <button id="horn-mode-button">HORN MODE?!</button>
+                <button id="erase-button">Erase the board</button>
+            </div>
             <div class="size-settings">
                 <input type="range" min="1" max="100" value="16" class="slider" id="board-size-slider" />
                 <p class="board-size-label">16 x 16</p>
